@@ -8,5 +8,6 @@ RUN mvn -B clean package -DskipTests
 FROM openjdk:17
 WORKDIR /app
 COPY --from=build /app/target/*.jar StageOneTask.jar
+COPY src/main/resources/secret.properties /app/secret.properties
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "StageOneTask.jar"]
