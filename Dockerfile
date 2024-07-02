@@ -8,7 +8,7 @@ RUN mvn -B clean package -DskipTests
 FROM openjdk:17
 WORKDIR /app
 COPY --from=build /app/target/*.jar StageOneTask.jar
-EXPOSE 8080
+EXPOSE 8000
 ENTRYPOINT ["java", "-jar", "StageOneTask.jar"]
 
 
