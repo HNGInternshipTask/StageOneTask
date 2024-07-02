@@ -1,7 +1,12 @@
-FROM maven:3.8.7 as build
+# Build stage
+FROM maven:3.8.7 AS build
+WORKDIR /app
 COPY . .
 RUN mvn -B clean package -DskipTests
+
+# Run stage
 FROM openjdk:17
-COPY --from=build ./target/*.jar StageOneTask.jar
+WORKDIR /app
+COPY --from=build /app/target/*.jar StageOneTask.jar
 EXPOSE 8080
-ENTRYPOINT ["Java", "-jar" , "StageOneTask.jar"]
+ENTRYPOINT ["java", "-jar", "StageOneTask.jar"]
