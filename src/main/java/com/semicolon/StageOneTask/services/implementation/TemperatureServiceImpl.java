@@ -12,18 +12,18 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class TemperatureServiceImpl implements TemperatureService {
 
-    @Value("${openWeather.api.key}")
-    private String openWeatherKey;
-    @Value("${openWeather.base.url}")
-    private String openBaseUrl;
+//    @Value("${openWeather.api.key}")
+//    private String openWeatherKey;
+//    @Value("${openWeather.base.url}")
+//    private String openBaseUrl;
 
 
     @Override
     public TemperatureResponse getTemperature(TemperatureRequest request) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        headers.set("api-key", openWeatherKey);
-        String completeUrl = openBaseUrl+ "appid=" + openWeatherKey +"&units=metric"+ "&q=" + request.getCity_name();
+        headers.set("api-key", System.getenv("OPEN_WEATHER_API_KEY"));
+        String completeUrl = System.getenv("OPEN_WEATHER_BASE_URL")+ "appid=" +System.getenv("OPEN_WEATHER_API_KEY") +"&units=metric"+ "&q=" + request.getCity_name();
         ResponseEntity<TemperatureResponse> response = restTemplate.postForEntity(completeUrl,headers,
                 TemperatureResponse.class);
 

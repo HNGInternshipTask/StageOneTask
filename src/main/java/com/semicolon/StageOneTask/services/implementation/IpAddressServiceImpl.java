@@ -13,15 +13,14 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class IpAddressServiceImpl implements IpAddressService {
 
-    @Value("${ipapi.base.url}")
-    private String ipapiBaseUrl;
 
     @Override
     public VisitorResponse getIp() {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("User-Agent", "java-ipapi-v1.02");
-        IpapiResponse ipapiResponse = restTemplate.getForObject(ipapiBaseUrl,IpapiResponse.class,headers);
+
+        IpapiResponse ipapiResponse = restTemplate.getForObject(System.getenv("IPAPI_BASE_URL"),IpapiResponse.class,headers);
         if (ipapiResponse == null){
             throw new InternalServerError("Internal Server Error");
         }
